@@ -1,5 +1,7 @@
 package com.example.events;
 
+import android.location.Location;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
@@ -8,7 +10,7 @@ import com.parse.ParseObject;
  */
 @ParseClassName("Event")
 public class Event extends ParseObject {
-
+    private Location loc=new Location("");
     public String getName(){
         return getString("Name");
     }
@@ -33,10 +35,21 @@ public class Event extends ParseObject {
         put("Price", price);
     }
 
+    public void setLocation( double x,double y)
+    {
+        loc.setLatitude(x);
+        loc.setLongitude (y);
+    }
+
+
+    public float getdis(){return (RealTime.loc.distanceTo(getLocation())/1000);}
+
     @Override
     public String toString(){
         return getString("Name") + "\n" +
                        getString("Price") + "$" + "\n" +
                        getString("NumOfTicketsLeft");
     }
+
+    public Location getLocation(){return loc;}
 }
